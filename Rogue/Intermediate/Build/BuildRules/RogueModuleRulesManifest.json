@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\UnrealProjects\\Rogue\\Rogue\\Source\\Rogue\\Rogue.Build.cs",
+		"D:\\UnrealProjects\\Rogue\\Rogue\\Source\\Rogue.Target.cs",
+		"D:\\UnrealProjects\\Rogue\\Rogue\\Source\\RogueEditor.Target.cs"
+	],
+	"EngineVersion": "4.25.4"
+}

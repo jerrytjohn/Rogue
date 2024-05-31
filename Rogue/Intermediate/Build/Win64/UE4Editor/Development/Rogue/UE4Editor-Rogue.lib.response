@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-Rogue.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\RogueEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\Rogue.cpp.obj"
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\RogueGameModeBase.cpp.obj"
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\Rogue.init.gen.cpp.obj"
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\RogueGameModeBase.gen.cpp.obj"
+"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\Default.rc2.res"
+/OUT:"D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\UE4Editor-Rogue.lib"
+/INCLUDE:IMPLEMENT_MODULE_Rogue

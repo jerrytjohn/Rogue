@@ -1,0 +1,3 @@
+D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\Definitions.Rogue.h
+D:\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

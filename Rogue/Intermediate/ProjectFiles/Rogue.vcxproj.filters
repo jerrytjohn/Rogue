@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Rogue.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{00A8ABE3-2FB5-450F-9D77-B25682E46BFF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Rogue.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\RogueEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{1FBA5596-2C40-4285-8A13-3A9677C6B3F2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Rogue">
+      <UniqueIdentifier>{F5F5E7F9-D649-4569-81EB-103261057A33}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Rogue\Rogue.Build.cs">
+      <Filter>Source\Rogue</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Rogue\Rogue.cpp">
+      <Filter>Source\Rogue</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Rogue\Rogue.h">
+      <Filter>Source\Rogue</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Rogue\RogueGameModeBase.cpp">
+      <Filter>Source\Rogue</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Rogue\RogueGameModeBase.h">
+      <Filter>Source\Rogue</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
