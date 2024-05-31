@@ -14,6 +14,7 @@ ARgMagicProjectile::ARgMagicProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
+	SphereComponent->SetCollisionProfileName("Projectile");
 	RootComponent = SphereComponent;
 
 	ParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");
