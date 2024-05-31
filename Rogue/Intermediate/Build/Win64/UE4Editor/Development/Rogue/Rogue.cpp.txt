@@ -1,2 +1,0 @@
-D:\UnrealProjects\Rogue\Rogue\Intermediate\Build\Win64\UE4Editor\Development\Rogue\Definitions.Rogue.h
-D:\UnrealProjects\Rogue\Rogue\Source\Rogue\Rogue.h
