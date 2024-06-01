@@ -35,8 +35,4 @@ protected:
 	void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	void Explode();
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

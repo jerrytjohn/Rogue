@@ -9,16 +9,18 @@
 // Sets default values
 ARgExplosive::ARgExplosive()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Mesh->SetSimulatePhysics(true);
 	RootComponent = Mesh;
+	
 	RadialForce = CreateDefaultSubobject<URadialForceComponent>("RadialForce");
-	RadialForce->SetupAttachment(Mesh);
+	// Leaving this on applies small constant force via component 'tick' (Optional)
+	RadialForce->SetAutoActivate(false);
+	//RadialForce->SetupAttachment(Mesh);
 	RadialForce->Radius = 750.0f;
 	RadialForce->ImpulseStrength = 2500.0f;
-	RadialForce->bImpulseVelChange = true;	// Optional. Ignores mass. If false, the impulse strength will need to be very high (20k) to even be noticed.
+	RadialForce->bImpulseVelChange = true;	// Optional. Ignores mass. If false, the impulse strength will need to be very high (~20k) to even be noticed.
+	RadialForce->AddCollisionChannelToAffect(ECC_WorldDynamic); // Optional, default constructor of component already adds 4 object types to affect, excluding WorldDynamic
 
 }
 
@@ -33,6 +35,7 @@ void ARgExplosive::BeginPlay()
 void ARgExplosive::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+	Mesh->OnComponentHit.AddDynamic(this, &ARgExplosive::OnActorHit);
 }
 
 void ARgExplosive::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -55,11 +58,3 @@ void ARgExplosive::Explode()
 {
 	RadialForce->FireImpulse();
 }
-
-// Called every frame
-void ARgExplosive::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
