@@ -45,13 +45,19 @@ void ARgCharacter::MoveRight(float Value)
 	ControlRot.Pitch = 0.0f;
 	ControlRot.Roll = 0.0f;
 	// X = Forward
-	// Y = Left
+	// Y = Right
 	// Z = Up
 	FVector RightVector = FRotationMatrix(ControlRot).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RightVector, Value);
 }
 
 void ARgCharacter::PrimaryAttack()
+{
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, 0.2f);
+}
+
+void ARgCharacter::PrimaryAttack_Fire()
 {
 	FVector RightHandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 	FTransform SpawnTransform = FTransform(GetControlRotation(), RightHandLocation);
