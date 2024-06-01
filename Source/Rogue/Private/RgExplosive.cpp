@@ -9,9 +9,12 @@
 // Sets default values
 ARgExplosive::ARgExplosive()
 {
+	bExploded = false;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Mesh->SetSimulatePhysics(true);
-	RootComponent = Mesh;
+	//RootComponent = Mesh;
+
+	DestroyedMesh = CreateDefaultSubobject<UStaticMesh>("DestroyedMesh");
 	
 	RadialForce = CreateDefaultSubobject<URadialForceComponent>("RadialForce");
 	// Leaving this on applies small constant force via component 'tick' (Optional)
@@ -56,5 +59,11 @@ void ARgExplosive::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
 
 void ARgExplosive::Explode()
 {
-	RadialForce->FireImpulse();
+	if(!bExploded)
+	{
+		RadialForce->FireImpulse();
+		Mesh->SetStaticMesh(DestroyedMesh);
+		bExploded = true;
+	}
+	
 }

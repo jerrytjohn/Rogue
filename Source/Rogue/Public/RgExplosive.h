@@ -8,6 +8,7 @@
 
 class URadialForceComponent;
 class UStaticMeshComponent;
+class UStaticMesh;
 
 UCLASS()
 class ROGUE_API ARgExplosive : public AActor
@@ -25,8 +26,13 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere)
+	UStaticMesh* DestroyedMesh;
+
 	UPROPERTY(VisibleAnywhere)
 	URadialForceComponent* RadialForce;
+
+	bool bExploded;
 
 	virtual void PostInitializeComponents() override;
 
