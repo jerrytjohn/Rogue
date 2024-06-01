@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RgCharacter.generated.h"
 
+class URgInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -20,7 +21,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
-
+	
 	FTimerHandle TimerHandle_PrimaryAttack;
 public:
 	// Sets default values for this character's properties
@@ -33,6 +34,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	URgInteractionComponent* InteractionComponent;
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
@@ -46,5 +50,5 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	void PrimaryInteract();
 };

@@ -3,6 +3,7 @@
 
 #include "RgCharacter.h"
 
+#include "RgInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -18,6 +19,8 @@ ARgCharacter::ARgCharacter()
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera");
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	InteractionComponent= CreateDefaultSubobject<URgInteractionComponent>("InteractionComponent");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;		// The character physically turns toward their direction of movement
 
@@ -86,8 +89,14 @@ void ARgCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ARgCharacter::PrimaryInteract);
 
 	// Inputs that handle attacks
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARgCharacter::PrimaryAttack);
+}
+
+void ARgCharacter::PrimaryInteract()
+{
+	InteractionComponent->PrimaryInteract();
 }
 
