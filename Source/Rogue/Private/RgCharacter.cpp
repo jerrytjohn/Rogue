@@ -62,13 +62,17 @@ void ARgCharacter::PrimaryAttack()
 
 void ARgCharacter::PrimaryAttack_Fire()
 {
-	FVector RightHandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-	FTransform SpawnTransform = FTransform(GetControlRotation(), RightHandLocation);
+	if(ensure(ProjectileClass))		// Little assertion to remind you to assign the projectile, if you haven't yet
+	{
+		FVector RightHandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+		FTransform SpawnTransform = FTransform(GetControlRotation(), RightHandLocation);
 	
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;	// Spawn even if you spawn inside something
-	SpawnParams.Instigator = this;
-	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParams);
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;	// Spawn even if you spawn inside something
+		SpawnParams.Instigator = this;
+		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParams);
+	}
+	
 }
 
 // Called every frame
