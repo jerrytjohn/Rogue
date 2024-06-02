@@ -27,10 +27,12 @@ ARgMagicProjectile::ARgMagicProjectile()
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
 
 	RadialForceComponent = CreateDefaultSubobject<URadialForceComponent>("RadialForceComponent");
-	RadialForceComponent->Radius = 100.0f;
-	RadialForceComponent->ImpulseStrength = 300.0f;
+	RadialForceComponent->Radius = 300.0f;
+	RadialForceComponent->ImpulseStrength = 400.0f;
+	RadialForceComponent->SetAutoActivate(false);		// Disabling the slight constant radial force on surrounding objects
 	RadialForceComponent->AddCollisionChannelToAffect(ECC_WorldDynamic); 
 	RadialForceComponent->SetupAttachment(SphereComponent);
+	RadialForceComponent->bImpulseVelChange = true;		// You need ridiculously high force values if this is false
 
 }
  
