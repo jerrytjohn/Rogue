@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
 ARgMagicProjectile::ARgMagicProjectile()
@@ -24,6 +25,12 @@ ARgMagicProjectile::ARgMagicProjectile()
 	ProjectileMovementComponent->InitialSpeed = 1000.0f;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
+
+	RadialForceComponent = CreateDefaultSubobject<URadialForceComponent>("RadialForceComponent");
+	RadialForceComponent->Radius = 100.0f;
+	RadialForceComponent->ImpulseStrength = 300.0f;
+	RadialForceComponent->AddCollisionChannelToAffect(ECC_WorldDynamic); 
+	RadialForceComponent->SetupAttachment(SphereComponent);
 
 }
  

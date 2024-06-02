@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "RgMagicProjectile.generated.h"
 
+class URadialForceComponent;
 class UProjectileMovementComponent;
 class USphereComponent;
 
@@ -20,14 +21,17 @@ public:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComponent;
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UParticleSystemComponent*	ParticleEffect;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	URadialForceComponent*	RadialForceComponent;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

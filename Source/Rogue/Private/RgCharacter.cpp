@@ -67,6 +67,7 @@ void ARgCharacter::PrimaryAttack_Fire()
 	
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;	// Spawn even if you spawn inside something
+	SpawnParams.Instigator = this;
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParams);
 }
 
