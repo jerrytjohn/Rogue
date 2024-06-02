@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "RgExplosive.generated.h"
 
+class UParticleEmitter;
 class URadialForceComponent;
 class UStaticMeshComponent;
 class UStaticMesh;
@@ -31,6 +32,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	URadialForceComponent* RadialForce;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* ExplosionVFX;
 
 	bool bExploded;
 
