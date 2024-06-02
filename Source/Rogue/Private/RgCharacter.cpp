@@ -3,6 +3,7 @@
 
 #include "RgCharacter.h"
 
+#include "DrawDebugHelpers.h"
 #include "RgInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -62,18 +63,46 @@ void ARgCharacter::PrimaryAttack()
 
 void ARgCharacter::PrimaryAttack_Fire()
 {
-	if(ensure(ProjectileClass))		// Little assertion to remind you to assign the projectile, if you haven't yet
-	{
-		FVector RightHandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-		FTransform SpawnTransform = FTransform(GetControlRotation(), RightHandLocation);
-	
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;	// Spawn even if you spawn inside something
-		SpawnParams.Instigator = this;
-		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTransform, SpawnParams);
-	}
-	
+	SpawnProjectile(ProjectileClass);
 }
+
+void ARgCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
+{
+	if(ensureAlways(ClassToSpawn))
+	{
+		FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		SpawnParameters.Instigator = this;
+
+		FCollisionShape Shape;
+		Shape.SetSphere(20.0f);
+
+		//Ignore the player
+		FCollisionQueryParams CollisionParams;
+		CollisionParams.AddIgnoredActor(this);
+
+		FCollisionObjectQueryParams ObjectParams;
+		ObjectParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+		ObjectParams.AddObjectTypesToQuery(ECC_WorldStatic);
+		ObjectParams.AddObjectTypesToQuery(ECC_Pawn);
+
+		FVector TraceStart = CameraComponent->GetComponentLocation();
+		FVector TraceEnd = CameraComponent->GetComponentLocation() + (GetControlRotation().Vector()*7777);
+
+		FHitResult HitData;
+		if(GetWorld()->SweepSingleByObjectType(HitData, TraceStart, TraceEnd, FQuat::Identity, ObjectParams, Shape, CollisionParams))
+		{
+			TraceEnd = HitData.ImpactPoint;
+			DrawDebugSphere(GetWorld(),TraceEnd, 20.0f, 12, FColor::Red, false, 2.0f);
+		}
+
+		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(TraceEnd-HandLocation).Rotator();
+		FTransform SpawnTM = FTransform(ProjectileRotation, HandLocation);
+		GetWorld()->SpawnActor<AActor>(ClassToSpawn, SpawnTM, SpawnParameters);
+	}
+}
+
 
 // Called every frame
 void ARgCharacter::Tick(float DeltaTime)
