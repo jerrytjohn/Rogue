@@ -4,6 +4,7 @@
 #include "RgInteractionComponent.h"
 
 #include "DrawDebugHelpers.h"
+#include "RgCharacter.h"
 #include "RgInteractableInterface.h"
 
 // Sets default values for this component's properties
@@ -39,6 +40,7 @@ void URgInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 
 void URgInteractionComponent::PrimaryInteract()
 {
+	
 	FCollisionObjectQueryParams ObjectQueryParams;
 	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);	// list of all the object types that you want to query
 
@@ -60,8 +62,12 @@ void URgInteractionComponent::PrimaryInteract()
 	{
 		if (HitActor->Implements<URgInteractableInterface>())		// The only place where the syntax expects UInterface instead of Interface 
 		{
-			APawn* MyPawn = Cast<APawn>(MyOwner); 
+			APawn* MyPawn = Cast<APawn>(MyOwner);
 			IRgInteractableInterface::Execute_Interact(HitActor, MyPawn);
+
+			// Do an interact animation
+			ARgCharacter* MyCharacter = Cast<ARgCharacter>(MyOwner);
+			MyCharacter->PlayAnimMontage(InteractAnim);
 		}
 	}
 	/*

@@ -18,6 +18,8 @@ public:
 
 	void PrimaryInteract();
 protected:
+	UPROPERTY(EditAnywhere, Category="Animation")
+	UAnimMontage* InteractAnim;
 	// Called when the game starts
 	virtual void BeginPlay() override;
 

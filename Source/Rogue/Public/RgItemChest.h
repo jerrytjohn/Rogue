@@ -12,7 +12,7 @@ class UStaticMeshComponent;
 UCLASS()
 class ROGUE_API ARgItemChest : public AActor, public IRgInteractableInterface
 {
-	GENERATED_BODY()
+	GENERATED_BODY() 
 
 	
 	
@@ -31,7 +31,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UStaticMeshComponent* LidMesh;
 	
 
