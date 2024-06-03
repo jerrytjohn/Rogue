@@ -16,6 +16,7 @@ ARgMagicProjectile::ARgMagicProjectile()
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetCollisionProfileName("Projectile");
+	SphereComponent->IgnoreActorWhenMoving(GetInstigator(), true);
 	RootComponent = SphereComponent;
 
 	ParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");

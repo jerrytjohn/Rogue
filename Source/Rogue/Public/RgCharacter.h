@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "RgCharacter.generated.h"
 
+class URgAttributeComponent;
 class URgInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -39,6 +40,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	URgInteractionComponent* InteractionComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	URgAttributeComponent* AttributeComponent;
+	
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);

@@ -29,7 +29,7 @@ protected:
 	UParticleSystemComponent* EffectComponent;
 
 	UFUNCTION()	
-	virtual  void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpuse, const FHitResult& Hit);
+	virtual  void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Explode();

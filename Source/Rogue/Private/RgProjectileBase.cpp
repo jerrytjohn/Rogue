@@ -28,7 +28,7 @@ ARgProjectileBase::ARgProjectileBase()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void ARgProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpuse, const FHitResult& Hit)
+void ARgProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	Explode();
 }

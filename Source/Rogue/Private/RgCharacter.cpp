@@ -4,6 +4,7 @@
 #include "RgCharacter.h"
 
 #include "DrawDebugHelpers.h"
+#include "RgAttributeComponent.h"
 #include "RgInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -22,6 +23,8 @@ ARgCharacter::ARgCharacter()
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	InteractionComponent= CreateDefaultSubobject<URgInteractionComponent>("InteractionComponent");
+
+	AttributeComponent = CreateDefaultSubobject<URgAttributeComponent>("AttributeComponent");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;		// The character physically turns toward their direction of movement
 
