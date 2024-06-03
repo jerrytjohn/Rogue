@@ -94,7 +94,7 @@ void ARgCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 		if(GetWorld()->SweepSingleByObjectType(HitData, TraceStart, TraceEnd, FQuat::Identity, ObjectParams, Shape, CollisionParams))
 		{
 			TraceEnd = HitData.ImpactPoint;
-			DrawDebugSphere(GetWorld(),TraceEnd, 20.0f, 12, FColor::Red, false, 2.0f);
+			//DrawDebugSphere(GetWorld(),TraceEnd, 20.0f, 12, FColor::Red, false, 2.0f);
 		}
 
 		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(TraceEnd-HandLocation).Rotator();

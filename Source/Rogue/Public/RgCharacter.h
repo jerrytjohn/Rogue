@@ -27,6 +27,8 @@ public:
 	// Sets default values for this character's properties
 	ARgCharacter();
 
+	
+
 protected:
 	// Called when the game starts or when spawned
 	UPROPERTY(VisibleAnywhere)

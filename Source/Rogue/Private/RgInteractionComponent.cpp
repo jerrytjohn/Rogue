@@ -40,41 +40,48 @@ void URgInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 
 void URgInteractionComponent::PrimaryInteract()
 {
+	ARgCharacter* MyOwnerCharacter = Cast<ARgCharacter>(GetOwner());
 	
-	FCollisionObjectQueryParams ObjectQueryParams;
-	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);	// list of all the object types that you want to query
-
-	AActor* MyOwner = GetOwner();
-	
-	FVector End;
 	FVector EyeLocation;
 	FRotator EyeRotation;
-	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+	MyOwnerCharacter->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+	FCollisionShape Shape;
+	Shape.SetSphere(50.0f);
+
+	//Ignore the player
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(MyOwnerCharacter);
+
+	FCollisionObjectQueryParams ObjectParams;
+	ObjectParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+	ObjectParams.AddObjectTypesToQuery(ECC_WorldStatic);
+	ObjectParams.AddObjectTypesToQuery(ECC_Pawn);
+
 	float RayCastRange = 250.0f;			// Query Distance in front of eyes in centimeters
-	End = EyeLocation+ (EyeRotation.Vector()*RayCastRange);					
+	FVector TraceEnd = EyeLocation+ (EyeRotation.Vector()*RayCastRange);		
 
-	FHitResult HitResult;
-	bool bHitSomething = GetWorld()->LineTraceSingleByObjectType(HitResult, EyeLocation, End, ObjectQueryParams);
+	FHitResult HitData;
+	bool bHitSomething = GetWorld()->SweepSingleByObjectType(HitData, EyeLocation, TraceEnd, FQuat::Identity, ObjectParams, Shape, CollisionParams);
+	AActor* HitActor = HitData.GetActor();
 
-	AActor* HitActor = HitResult.GetActor();
 
 	if(HitActor)	// Avoiding a null pointer
 	{
 		if (HitActor->Implements<URgInteractableInterface>())		// The only place where the syntax expects UInterface instead of Interface 
 		{
-			APawn* MyPawn = Cast<APawn>(MyOwner);
+			APawn* MyPawn = Cast<APawn>(GetOwner());
 			IRgInteractableInterface::Execute_Interact(HitActor, MyPawn);
+			
+			MyOwnerCharacter->PlayAnimMontage(InteractAnim);
 
-			// Do an interact animation
-			ARgCharacter* MyCharacter = Cast<ARgCharacter>(MyOwner);
-			MyCharacter->PlayAnimMontage(InteractAnim);
+			// Debug visualizers
+			TraceEnd = HitData.ImpactPoint;
+			DrawDebugSphere(GetWorld(),TraceEnd, 50.0f, 12, FColor::Yellow, false, 2.0f);
+			FColor SightLineColor = bHitSomething? FColor::Green : FColor::Red;
+			DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, SightLineColor,false, 2.0f, 2.0f);
 		}
 	}
-	/*
-	// Debug to see the cast
-	FColor SightLineColor = bHitSomething? FColor::Green : FColor::Red;
-	DrawDebugLine(GetWorld(), EyeLocation, End, SightLineColor,false, 2.0f, 2.0f);
-	*/
 
 }
 
