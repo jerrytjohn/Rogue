@@ -3,6 +3,7 @@
 
 #include "RgMagicProjectile.h"
 
+#include "RgAttributeComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -16,7 +17,8 @@ ARgMagicProjectile::ARgMagicProjectile()
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetCollisionProfileName("Projectile");
-	SphereComponent->IgnoreActorWhenMoving(GetInstigator(), true);
+	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ARgMagicProjectile::OnActorOverlap);
+	//SphereComponent->IgnoreActorWhenMoving(GetInstigator(), true);
 	RootComponent = SphereComponent;
 
 	ParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");
@@ -42,6 +44,20 @@ void ARgMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ARgMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(OtherActor)	// Don't call functions on null pointers
+	{
+		URgAttributeComponent* AttributeComponent = Cast<URgAttributeComponent>(OtherActor->GetComponentByClass(URgAttributeComponent::StaticClass()));
+		if(AttributeComponent)		// We could have hit a wall or something that doesn't have attributes like health. Make sure this s not null
+		{
+			AttributeComponent->ApplyHealthChange(-20.0f);		// Clean up and assign to a variable later
+			Destroy();
+		}
+	}
 }
 
 // Called every frame

@@ -14,30 +14,32 @@ UCLASS()
 class ROGUE_API ARgMagicProjectile : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ARgMagicProjectile();
 
 protected:
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComponent;
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UParticleSystemComponent*	ParticleEffect;
+	UParticleSystemComponent* ParticleEffect;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	URadialForceComponent*	RadialForceComponent;
-	
+	URadialForceComponent* RadialForceComponent;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+	UFUNCTION()
+	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };

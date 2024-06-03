@@ -41,7 +41,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	URgInteractionComponent* InteractionComponent;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	URgAttributeComponent* AttributeComponent;
 	
 	virtual void BeginPlay() override;
