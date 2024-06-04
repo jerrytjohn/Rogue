@@ -6,12 +6,15 @@
 #include "AIController.h"
 #include "RgAIController.generated.h"
 
-/**
- * 
- */
+class UBehaviorTree;
+
 UCLASS()
 class ROGUE_API ARgAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category="AI")
+	UBehaviorTree* BehaviorTree;
+	virtual void BeginPlay() override;
 };

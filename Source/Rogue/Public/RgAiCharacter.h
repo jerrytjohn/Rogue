@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "RgAiCharacter.generated.h"
 
+class ARgAIController;
+
 UCLASS()
 class ROGUE_API ARgAiCharacter : public ACharacter
 {
@@ -18,6 +20,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame
