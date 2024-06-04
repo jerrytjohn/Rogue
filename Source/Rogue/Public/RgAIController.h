@@ -16,5 +16,6 @@ class ROGUE_API ARgAIController : public AAIController
 protected:
 	UPROPERTY(EditDefaultsOnly, Category="AI")
 	UBehaviorTree* BehaviorTree;
+	
 	virtual void BeginPlay() override;
 };

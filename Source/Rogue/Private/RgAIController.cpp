@@ -6,6 +6,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+
 void ARgAIController::BeginPlay()
 {
 	Super::BeginPlay();
