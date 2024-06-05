@@ -17,11 +17,17 @@ class ROGUE_API ARgCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category="Attack")
-	TSubclassOf<AActor> ProjectileClass;
+	UPROPERTY(EditAnywhere, Category="Projectiles")
+	TSubclassOf<AActor> PrimaryProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category="Projectiles")
+	TSubclassOf<AActor> TeleportationProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
+
+	UPROPERTY(EditAnywhere, Category="Attack")
+	float AttackAnimDelay;
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
 public:
@@ -50,6 +56,8 @@ protected:
 	void MoveRight(float Value);
 	void PrimaryAttack();
 	void PrimaryAttack_Fire();
+	void TeleportViaProjectile();
+	void TeleportViaProjectile_TimeElapsed();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 
 public:	

@@ -29,6 +29,8 @@ ARgCharacter::ARgCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;		// The character physically turns toward their direction of movement
 
 	bUseControllerRotationYaw = false;			// Character can face in one direction, but that direction will not (necessarily) be controller forward
+
+	AttackAnimDelay = 0.2f;
 }
 
 // Called when the game starts or when spawned
@@ -61,12 +63,23 @@ void ARgCharacter::MoveRight(float Value)
 void ARgCharacter::PrimaryAttack()
 {
 	PlayAnimMontage(AttackAnim);
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, 0.2f);
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, AttackAnimDelay);
 }
 
 void ARgCharacter::PrimaryAttack_Fire()
 {
-	SpawnProjectile(ProjectileClass);
+	SpawnProjectile(PrimaryProjectileClass);
+}
+
+void ARgCharacter::TeleportViaProjectile()
+{
+	SpawnProjectile(TeleportationProjectileClass);
+}
+
+void ARgCharacter::TeleportViaProjectile_TimeElapsed()
+{
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, AttackAnimDelay);
 }
 
 void ARgCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
@@ -130,6 +143,7 @@ void ARgCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	// Inputs that handle attacks
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARgCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("Teleport", IE_Pressed, this, &ARgCharacter::TeleportViaProjectile);
 }
 
 void ARgCharacter::PrimaryInteract()
