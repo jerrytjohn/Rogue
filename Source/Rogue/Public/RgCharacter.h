@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Projectiles")
 	TSubclassOf<AActor> TeleportationProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category="Projectiles")
+	TSubclassOf<AActor> BlackholeProjectileClass;
+
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
 
@@ -58,6 +61,8 @@ protected:
 	void PrimaryAttack_Fire();
 	void TeleportViaProjectile();
 	void TeleportViaProjectile_TimeElapsed();
+	void UnleashBlackhole();
+	void UnleashBlackhole_TimeElapsed();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 
 public:	

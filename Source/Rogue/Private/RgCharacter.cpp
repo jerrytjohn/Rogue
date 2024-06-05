@@ -68,15 +68,37 @@ void ARgCharacter::PrimaryAttack()
 
 void ARgCharacter::PrimaryAttack_Fire()
 {
-	SpawnProjectile(PrimaryProjectileClass);
+	if(ensureMsgf(PrimaryProjectileClass, TEXT("Assign the Primary projectile to the Character")))
+	{
+		SpawnProjectile(PrimaryProjectileClass);
+	}
+	
 }
 
 void ARgCharacter::TeleportViaProjectile()
 {
-	SpawnProjectile(TeleportationProjectileClass);
+	if(ensureMsgf(TeleportationProjectileClass, TEXT("Assign the Teleportation projectile to the Character")))
+	{
+		SpawnProjectile(TeleportationProjectileClass);
+	}
 }
 
 void ARgCharacter::TeleportViaProjectile_TimeElapsed()
+{
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, AttackAnimDelay);
+}
+
+void ARgCharacter::UnleashBlackhole()
+{
+	if(ensureMsgf(BlackholeProjectileClass, TEXT("Assign the Blackhole projectile to the Character")))
+	{
+		SpawnProjectile(BlackholeProjectileClass);
+	}
+	
+}
+
+void ARgCharacter::UnleashBlackhole_TimeElapsed()
 {
 	PlayAnimMontage(AttackAnim);
 	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ARgCharacter::PrimaryAttack_Fire, AttackAnimDelay);
@@ -144,6 +166,7 @@ void ARgCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	// Inputs that handle attacks
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARgCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Teleport", IE_Pressed, this, &ARgCharacter::TeleportViaProjectile);
+	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &ARgCharacter::UnleashBlackhole);
 }
 
 void ARgCharacter::PrimaryInteract()
