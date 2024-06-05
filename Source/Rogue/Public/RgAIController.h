@@ -16,6 +16,17 @@ class ROGUE_API ARgAIController : public AAIController
 protected:
 	UPROPERTY(EditDefaultsOnly, Category="AI")
 	UBehaviorTree* BehaviorTree;
-	
+
+	UPROPERTY(EditAnywhere, Category="Animations")
+	UAnimMontage* AttackAnim;
+
+public:
+	UAnimMontage* GetAttackAnim() const
+	{
+		return AttackAnim;
+	}
+
+protected:
 	virtual void BeginPlay() override;
+	
 };

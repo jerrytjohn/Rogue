@@ -4,12 +4,15 @@
 #include "RgBTTaskNode_RangedAttack.h"
 
 #include "AIController.h"
+#include "RgAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 
 EBTNodeResult::Type URgBTTaskNode_RangedAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAIController* MyController = OwnerComp.GetAIOwner();
+	//AAIController* MyController = OwnerComp.GetAIOwner();
+
+	ARgAIController* MyController = Cast<ARgAIController> (OwnerComp.GetAIOwner());
 
 	if(ensure(MyController))
 	{
@@ -34,6 +37,8 @@ EBTNodeResult::Type URgBTTaskNode_RangedAttack::ExecuteTask(UBehaviorTreeCompone
 		FVector Direction = TargetActor->GetActorLocation() - MuzzleLocation;
 		FRotator MuzzleRotation = Direction.Rotation();
 
+		MyPawn->PlayAnimMontage(MyController->GetAttackAnim());
+		
 		// Spawning the projectile
 		FActorSpawnParameters Params;
 		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
