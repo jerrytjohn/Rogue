@@ -23,7 +23,7 @@ protected:
 	USphereComponent* SphereComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	UProjectileMovementComponent* ProjectileMover;
+	UProjectileMovementComponent* MoveComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UParticleSystemComponent* EffectComponent;

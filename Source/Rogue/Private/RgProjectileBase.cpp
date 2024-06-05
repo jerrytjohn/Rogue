@@ -19,11 +19,11 @@ ARgProjectileBase::ARgProjectileBase()
 	EffectComponent = CreateDefaultSubobject<UParticleSystemComponent>("EffectComponent");
 	EffectComponent->SetupAttachment(RootComponent);
 
-	ProjectileMover = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
-	ProjectileMover->bRotationFollowsVelocity = true;
-	ProjectileMover->bInitialVelocityInLocalSpace = true;
-	ProjectileMover->ProjectileGravityScale = 0.0f;
-	ProjectileMover->InitialSpeed = 7777;
+	MoveComponent = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
+	MoveComponent->bRotationFollowsVelocity = true;
+	MoveComponent->bInitialVelocityInLocalSpace = true;
+	MoveComponent->ProjectileGravityScale = 0.0f;
+	MoveComponent->InitialSpeed = 7777;
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
