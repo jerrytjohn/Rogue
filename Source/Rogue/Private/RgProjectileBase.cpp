@@ -11,7 +11,6 @@
 // Sets default values
 ARgProjectileBase::ARgProjectileBase()
 {
-	this->Lifespan = 3.0f;
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetCollisionProfileName("Projectile");
 	SphereComponent->OnComponentHit.AddDynamic(this, &ARgProjectileBase::OnActorHit);

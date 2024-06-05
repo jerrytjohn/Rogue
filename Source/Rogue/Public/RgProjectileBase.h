@@ -16,8 +16,6 @@ class ROGUE_API ARgProjectileBase : public AActor
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category="Effects")
-	float Lifespan;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Effects")
 	UParticleSystem* ImpactVFX;
