@@ -17,6 +17,12 @@ float URgAttributeComponent::GetHealthFraction() const
 	return (Health/MaxHealth);
 }
 
+
+bool URgAttributeComponent::IsDead() const
+{
+	return (Health<=0);
+}
+
 bool URgAttributeComponent::ApplyHealthChange(float Delta)
 {
 	Health += Delta;

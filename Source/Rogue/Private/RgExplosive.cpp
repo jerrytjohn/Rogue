@@ -92,7 +92,8 @@ void ARgExplosive::DoRadialDamage()
 			{
 				//
 				float DistanceFromExplosive = this->GetDistanceTo(ActorInBlastRadius);
-				float DiminishedDamage= FMath::RoundToFloat(DistanceFromExplosive/(RadialForce->Radius)*DamageAtGroundZero_RadiallyDiminishing);
+				float RadialFraction= 1.0f-(DistanceFromExplosive/(RadialForce->Radius));
+				float DiminishedDamage= FMath::RoundToFloat(RadialFraction*DamageAtGroundZero_RadiallyDiminishing);
 				AttributeComponent->ApplyHealthChange(-DiminishedDamage);
 			}
 		}

@@ -26,6 +26,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Attributes")
 	float MaxHealth;
 public:
+	UFUNCTION(BlueprintCallable, Category="Attributes")
+	bool IsDead() const;
+	
 	UPROPERTY(BlueprintAssignable, Category="Events")
 	FOnHealthChanged OnHealthChanged;
 	

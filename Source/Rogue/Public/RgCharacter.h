@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RgAttributeComponent.h"
 #include "GameFramework/Character.h"
 #include "RgCharacter.generated.h"
 
@@ -65,6 +66,8 @@ protected:
 	void UnleashBlackhole_TimeElapsed();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 
+	UFUNCTION()
+	void OnHealthChanged(URgAttributeComponent* OwningComponent, AActor* InstigatorActor, float NewHealth, float Delta, float HealthFraction);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
