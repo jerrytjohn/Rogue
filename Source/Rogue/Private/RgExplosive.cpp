@@ -4,6 +4,8 @@
 #include "RgExplosive.h"
 
 #include "DrawDebugHelpers.h"
+#include "RgAttributeComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleEmitter.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
@@ -12,6 +14,8 @@
 ARgExplosive::ARgExplosive()
 {
 	bExploded = false;
+	DamageAtGroundZero_RadiallyDiminishing = 250.0f;
+	
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Mesh->SetSimulatePhysics(true);
 	RootComponent = Mesh;
@@ -55,6 +59,7 @@ void ARgExplosive::Explode()
 {
 	if(!bExploded)
 	{
+		DoRadialDamage();
 		RadialForce->FireImpulse();
 		Mesh->SetStaticMesh(DestroyedMesh);
 		Mesh->AddImpulse(FVector(0,0,1)*500,NAME_None ,true);
@@ -62,5 +67,36 @@ void ARgExplosive::Explode()
 		ExplosionVFX->Activate();
 		bExploded = true;
 	}
+	
+}
+
+void ARgExplosive::DoRadialDamage()
+{
+	TArray<AActor*> OutActors;
+	TArray<AActor*> OverlappingActors;
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	TArray<AActor*> IgnoreActors;
+	TSubclassOf<AActor> ClassFilter;
+
+	// Populate ObjectTypes with Destructible and Pawn types
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Destructible));
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Pawn));
+
+	bool bOverlap = UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetActorLocation(), RadialForce->Radius, ObjectTypes, ClassFilter, IgnoreActors, OverlappingActors);
+	if (bOverlap)
+	{
+		for (AActor* ActorInBlastRadius : OverlappingActors)
+		{
+			URgAttributeComponent* AttributeComponent = ActorInBlastRadius->FindComponentByClass<URgAttributeComponent>();
+			if (AttributeComponent)
+			{
+				//
+				float DistanceFromExplosive = this->GetDistanceTo(ActorInBlastRadius);
+				float DiminishedDamage= FMath::RoundToFloat(DistanceFromExplosive/(RadialForce->Radius)*DamageAtGroundZero_RadiallyDiminishing);
+				AttributeComponent->ApplyHealthChange(-DiminishedDamage);
+			}
+		}
+	}
+
 	
 }

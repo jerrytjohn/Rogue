@@ -30,11 +30,14 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UStaticMesh* DestroyedMesh;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	URadialForceComponent* RadialForce;
 
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* ExplosionVFX;
+
+	UPROPERTY(EditAnywhere)
+	float DamageAtGroundZero_RadiallyDiminishing;
 
 	bool bExploded;
 
@@ -44,5 +47,6 @@ protected:
 	UFUNCTION()
 	void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	void Explode();
+	void DoRadialDamage();
 
 };
