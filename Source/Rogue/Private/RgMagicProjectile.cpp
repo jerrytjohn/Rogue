@@ -49,12 +49,12 @@ void ARgMagicProjectile::BeginPlay()
 void ARgMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor && OtherActor!= GetInstigator())	// Don't call functions on null pointers
+	if(OtherActor && OtherActor!= GetInstigator())	// Don't call functions on null pointers, and do not destroy he who fired you
 	{
 		URgAttributeComponent* AttributeComponent = Cast<URgAttributeComponent>(OtherActor->GetComponentByClass(URgAttributeComponent::StaticClass()));
 		if(AttributeComponent)		// We could have hit a wall or something that doesn't have attributes like health. Make sure this s not null
 		{
-			AttributeComponent->ApplyHealthChange(-20.0f);		// Clean up and assign to a variable later
+			AttributeComponent->ApplyHealthChange(-2.0f);		// Clean up and assign to a variable later
 			Destroy();
 		}
 	}
