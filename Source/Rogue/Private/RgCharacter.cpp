@@ -26,14 +26,18 @@ ARgCharacter::ARgCharacter()
 
 	AttributeComponent = CreateDefaultSubobject<URgAttributeComponent>("AttributeComponent");
 
-	// Bind the OnHealthChanged delegate to the OnHealthChanged function
-	AttributeComponent->OnHealthChanged.AddDynamic(this, &ARgCharacter::OnHealthChanged);
-
 	GetCharacterMovement()->bOrientRotationToMovement = true;		// The character physically turns toward their direction of movement
 
 	bUseControllerRotationYaw = false;			// Character can face in one direction, but that direction will not (necessarily) be controller forward
 
 	AttackAnimDelay = 0.2f;
+}
+
+void ARgCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	// Bind the OnHealthChanged delegate to the OnHealthChanged function
+	AttributeComponent->OnHealthChanged.AddDynamic(this, &ARgCharacter::OnHealthChanged);
 }
 
 // Called when the game starts or when spawned
@@ -179,9 +183,11 @@ void ARgCharacter::PrimaryInteract()
 void ARgCharacter::OnHealthChanged(URgAttributeComponent* OwningComponent, AActor* InstigatorActor, float NewHealth,
 	float Delta, float HealthFraction)
 {
+
+	UE_LOG(LogTemp, Log, TEXT("Health Changed"));
 	if(NewHealth<=0.0f)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Input disabled for player"));
+		
 		APlayerController* PlayerController = Cast<APlayerController>(GetController());
 		DisableInput(PlayerController);
 	}

@@ -56,6 +56,8 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+	virtual void PostInitializeComponents() override;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void PrimaryAttack();
